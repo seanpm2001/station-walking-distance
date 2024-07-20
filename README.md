@@ -1,10 +1,12 @@
-# basic info
-Python 3.10.5
+# station-walking-distance
+Finding walking distances/times between train stations 
 
-`keys.txt` should contain the MBTA v3 API key on line 1, and the Google Maps API key on line 2.
+## Requirements
+- Python 3.10.5
+- `keys.txt` should contain the MBTA v3 API key on line 1, and the Google Maps API key on line 2.
 
-# files in order of execution
-## `more-station-info.py`
+## Files in order of execution
+### `more-station-info.py`
 Converts `stations.json` with format:
 ```json
     {
@@ -28,7 +30,7 @@ into `stations-info.json` with format:
         ...
     }
 ```
-## `mbta-data.py`
+### `mbta-data.py`
 Converts `stations-info.json` into `stations-full.json`. It uses the MBTA v3 API to get the address, geographic coordinates, **and wheelchair accessibility** of each station.
 ``` json
 {
@@ -43,7 +45,7 @@ Converts `stations-info.json` into `stations-full.json`. It uses the MBTA v3 API
     ...
 }
 ```
-## `distance-calc.py`
+### `distance-calc.py`
 Uses *GeoPy* to find all pairs of stations that are less than one mile apart as the crow flies. This uses coordinates and a rough calculation, but it narrows down the options by a *lot* so that minimal requests have to be made to the Google Maps API. It outputs `allPairs.json` with the format:
 ``` json
 [
@@ -54,7 +56,7 @@ Uses *GeoPy* to find all pairs of stations that are less than one mile apart as 
     ...
 ]
 ```
-## `gmaps-data.py`
+### `gmaps-data.py`
 Requests the walking distances and times between all pairs of stations from `allPairs.json`, and saves them to `final-dist-and-time.json`. The keys in the output file are named as `"place-exmpl_place-1234"`, with the two stations ordered by Python's `.sort()`. The format is as follows:
 ``` json
 {
